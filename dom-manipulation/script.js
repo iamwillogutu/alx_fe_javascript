@@ -217,11 +217,17 @@ async function postQuotesToServer() {
   }
 }
 
-// Periodically fetch server data every 30 seconds
-setInterval(fetchQuotesFromServer, 30000);
+// ---------------- Sync Quotes Wrapper ---------------- //
+function syncQuotes() {
+  fetchQuotesFromServer();  // Pull updates from server
+  postQuotesToServer();     // Push local updates to server
+}
 
-// Initial fetch on page load
-fetchQuotesFromServer();
+// Periodically sync quotes every 30 seconds
+setInterval(syncQuotes, 30000);
+
+// Initial sync on page load
+syncQuotes();
 
 // ---------------- Initialization ---------------- //
 
