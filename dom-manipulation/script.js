@@ -60,6 +60,9 @@ function addQuote() {
 
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
+
+    // POST the updated quotes to server
+    postQuotesToServer();
   }
 }
 
@@ -137,13 +140,16 @@ function importFromJsonFile(event) {
     saveQuotes();
     populateCategories();
     alert("Quotes imported successfully!");
+
+    // POST imported quotes to server
+    postQuotesToServer();
   };
   fileReader.readAsText(event.target.files[0]);
 }
 
 // ---------------- Server Sync Functionality ---------------- //
 
-// Fetch quotes from simulated server (function renamed to match expected checker)
+// Fetch quotes from simulated server
 async function fetchQuotesFromServer() {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -193,6 +199,22 @@ function showConflictNotification() {
     document.body.insertBefore(notification, document.body.firstChild);
   }
   notification.textContent = "Quotes have been updated from the server.";
+}
+
+// ---------------- POST Local Quotes to Server ---------------- //
+async function postQuotesToServer() {
+  try {
+    await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quotes)
+    });
+    console.log("Quotes posted to server successfully.");
+  } catch (error) {
+    console.error("Error posting quotes to server:", error);
+  }
 }
 
 // Periodically fetch server data every 30 seconds
