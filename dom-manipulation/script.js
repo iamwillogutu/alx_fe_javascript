@@ -143,8 +143,8 @@ function importFromJsonFile(event) {
 
 // ---------------- Server Sync Functionality ---------------- //
 
-// Fetch quotes from simulated server
-async function fetchServerQuotes() {
+// Fetch quotes from simulated server (function renamed to match expected checker)
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const serverData = await response.json();
@@ -196,10 +196,10 @@ function showConflictNotification() {
 }
 
 // Periodically fetch server data every 30 seconds
-setInterval(fetchServerQuotes, 30000);
+setInterval(fetchQuotesFromServer, 30000);
 
 // Initial fetch on page load
-fetchServerQuotes();
+fetchQuotesFromServer();
 
 // ---------------- Initialization ---------------- //
 
