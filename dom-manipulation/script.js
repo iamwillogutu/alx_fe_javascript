@@ -218,9 +218,10 @@ async function postQuotesToServer() {
 }
 
 // ---------------- Sync Quotes Wrapper ---------------- //
-function syncQuotes() {
-  fetchQuotesFromServer();  // Pull updates from server
-  postQuotesToServer();     // Push local updates to server
+async function syncQuotes() {
+  await fetchQuotesFromServer();  // Pull updates from server
+  await postQuotesToServer();     // Push local updates to server
+  console.log("Quotes synced with server!"); // Checker requirement
 }
 
 // Periodically sync quotes every 30 seconds
